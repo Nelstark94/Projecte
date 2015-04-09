@@ -1,0 +1,304 @@
+
+<html>
+<meta charset="utf-8">
+  <head>
+      <link href='http://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
+    <style>
+      body{
+        
+         margin: 0 auto;
+        background-color:#fff;
+        font-family: 'Raleway', sans-serif;
+
+      }
+
+      .randomimage
+      {
+          padding-left:10px;
+          height:200px;
+          
+      }
+      h1{
+          font-size:50px;
+          text-align:center;
+          color:#E88D6C;
+          text-transform: uppercase;
+        }
+
+      .boto {
+          
+            color:#fff;
+            text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);
+            padding: 14px 16px;
+            font-size: 18px;
+            line-height: 1.33;
+            border-radius: 6px;
+            display: inline-block;
+            font-weight: normal;
+            text-align: center;
+            vertical-align: middle;
+            cursor: pointer;
+            background-image: none;
+            border: 1px solid transparent;
+            white-space: nowrap;
+            height: 50px;
+            width:200px;
+            margin: 10 auto;
+            background-color: #E88D6C;
+          margin-left: 400px;
+      
+        }
+        .boto:hover{
+       background-color: #E8AD9D;
+}
+        
+        
+        }
+        .imagecontainer {
+            text-align:center;
+        }
+        
+        .Text
+        {
+          color:#400000;
+          font-size:25px;
+          text-align:center; 
+           width:200px;
+            height:50px;
+        }
+        
+        .TextResult
+        {
+          color:#7F0000;
+          font-size:25px;
+           width:200px;
+            height:50px;
+          text-align:center; 
+        }
+        table{
+        
+        margin: 0 auto;
+        border: none;
+        }
+       #mensaje{
+       
+       background-color: #E88D6C;
+           color: #fff;
+       }
+        
+    </style>
+  </head>
+  <body class="body" >
+      <h1>Joc de Paraules</h1>
+      <br/>
+      
+          <button class="boto" onclick="RandomString()">Start</button><br/>
+          <button class="boto" onclick="Result()">Resultado</button>
+
+      <br/>
+      <br/>
+      
+
+      
+      
+      <table>
+        <tr>
+          <!--Casillas para cada una de las palabras de la frase-->
+            <td><div id="Word0" class="text" draggable="true" ondragstart="drag(event)"></div></td>
+            <td><div id="Word1" class="text" draggable="true" ondragstart="drag(event)"></div></td>
+            <td><div id="Word2" class="text"  draggable="true" ondragstart="drag(event)"></div></td>
+            <td><div id="Word3" class="text" draggable="true" ondragstart="drag(event)"></div></td>
+        </tr>
+      </table>
+      
+      <BR/>
+      
+            <table border="1">
+        <tr>
+          <!-- casillas de ordenación de la frase-->
+            <td><div id="Result0" class="textResult" ondrop="drop(event)" ondragover="allowDrop(event)" ></div></td>
+            <td><div id="Result1" class="textResult" ondrop="drop(event)" ondragover="allowDrop(event)"></div></td>
+            <td><div id="Result2" class="textResult" ondrop="drop(event)" ondragover="allowDrop(event)" ></div></td>
+            <td><div id="Result3" class="textResult" ondrop="drop(event)" ondragover="allowDrop(event)"></div></td>
+        </tr>
+      </table>
+      
+      <div id="Mensaje"></div>
+
+
+
+          <script>
+              
+              var nom = prompt("Hola! Como te llamas?","");
+              var number = 0;
+              var intentos = 0;
+                            
+			  checkCookie(nom);
+              
+              
+			  
+              //------------------
+                 
+              //Permite dejar las palabras
+              function allowDrop(ev) {
+                    ev.preventDefault();
+                }
+            //funcion que arrastra las palabras
+                function drag(ev) {
+                    ev.dataTransfer.setData("text", ev.target.id);
+                }
+              //deja la palaba dentro del div
+                function drop(ev) {
+                    ev.preventDefault();
+                    var data = ev.dataTransfer.getData("text");
+                    ev.target.innerHTML = (document.getElementById(data).innerHTML);
+                    document.getElementById(data).innerHTML="";
+
+                }
+              //-------------------
+              //Funcion para hacer el random
+              function shuffle(array) {
+                  var currentIndex = array.length, temporaryValue, randomIndex ;
+
+                  
+                  while (0 !== currentIndex) {
+
+                    // Escojer un elemento
+                    randomIndex = Math.floor(Math.random() * currentIndex);
+                    currentIndex -= 1;
+
+                    // Intercambiarlo con el actual
+                    temporaryValue = array[currentIndex];
+                    array[currentIndex] = array[randomIndex];
+                    array[randomIndex] = temporaryValue;
+                  }
+
+                  return array;
+            }
+              //funcion donde se decide si la frase ordenada esta bien, en el caso de estar en el orden INCORRECTO esta llama a la misma frase y limpia las cajas de ordenacion, si haciertas de dice en numero de intentos.
+              function Result() {
+                  
+                intentos+=1;
+                    /*TextoGenerado contiene la ordenacion que ha hecho el usuario*/
+                   var TextoGenerado = (document.getElementById("Result0").innerHTML) + " " + (document.getElementById("Result1").innerHTML) + " "  + (document.getElementById("Result2").innerHTML) + " " + (document.getElementById("Result3").innerHTML);
+                  //comparamos lo introducido con el orden correcto de la frase
+                  if (TextoGenerado == TextoActual)
+                  {
+                      alert("Muy bien has ganado!  " + intentos + " intentos!");
+                  }
+                  else{
+                      alert("Uyyy, intentalo de nuevo  "  + intentos + " intentos!");
+					  	//RandomString();
+						//volvemos a mostrar la frase hasta que este em el orden correcto
+						for (i = 0; i < TextoGenerado.split(" ").length; i++) { 
+							document.getElementById("Word" + i.toString()).innerHTML = TextoGenerado.split(" ")[i];
+						}
+            //limpiamos los campos para poder reutilizarlos
+						clear();
+                  }
+            
+                    setCookie(nom, intentos, 365);
+
+                  
+                  
+              }
+              
+                
+            var TextoActual="";
+              
+              /*Funcion para hacer el random de frases,y luego hacer el random de las palabras que compone la frase y luego la muestra por pantalla desordenada*/
+              function RandomString()
+              {
+                  var sources = [
+                    "El pajaro es azul",
+                    "Mi coche corre mucho",
+                    "Hoy es mi cumpleaños"
+                    ];
+					
+					/*
+					sources= new array();
+					sources[0]=new array('El pajaro es azul', 'http://nick-intl.mtvnimages.com/uri/mgid:file:gsp:scenic:/international/kidschoiceawards.com/2014/images/sponsor/rio2/gallery/rio2_char_shot_eduardo_1.jpg?height=276&width=490&matte=true&matteColor=0x000000&quality=0.91');
+					sources[1]=new array('Mi coche corre much', 'http://www.disney.es/sites/default/files/Cars/GENERIC/Character%20Section/Biography%20Images/msf_cars_cmi_lighting.jpg');
+					sources[2]=new array('Hoy es mi cumpleaños','http://todopeques.net/wp-content/uploads/2014/04/j3fodpqy9Kwai-300x266.jpg');
+					
+					*/
+                  var StringArray="";
+                  var NewRandomString = "";
+                
+                  TextoActual="";
+                  
+                  clear();
+                   //TextoActual guarda la frase random
+                  TextoActual=sources[Math.floor(Math.random() * sources.length)];
+                  
+                  do{
+                     StringArray=TextoActual.split(" ");
+                     //newRandomString guarda la frase desordenada, por medio de la funcion shuffle
+                     NewRandomString = shuffle(StringArray).join(" ");
+                  }
+                  while(StringArray == NewRandomString)
+                  
+                for (i = 0; i < NewRandomString.split(" ").length; i++) { 
+                    //mostramos la frase desordenada
+                    document.getElementById("Word" + i.toString()).innerHTML = NewRandomString.split(" ")[i];
+                }
+                  
+              }
+			   //funcion para limpiar los campos para que se pueda volver a usar
+			  function clear(){
+			  
+				          document.getElementById("Result0").innerHTML="";
+                 document.getElementById("Result1").innerHTML="";
+                 document.getElementById("Result2").innerHTML="";
+                 document.getElementById("Result3").innerHTML="";
+			 }
+			
+              
+			  //funcion que crea la cookie y la guarda
+			  function setCookie(cname,cvalue,exdays) {
+				var d = new Date();
+				d.setTime(d.getTime() + (exdays*24*60*60*1000));
+				var expires = "expires=" + d.toGMTString();
+				document.cookie = cname+"="+cvalue+"; "+expires;
+			}
+
+              //Funcion que coge la cokkies
+				function getCookie(cname) { // cname = 4
+					var name = cname + "="; // 4=
+					var ca = document.cookie.split(';');
+					for(var i=0; i<ca.length; i++) {
+						var c = ca[i];
+						while (c.charAt(0)==' ') c = c.substring(1);
+						if (c.indexOf(name) == 0) {
+							return c.substring(name.length, c.length);
+							}
+					}
+						return "";
+				}
+              //Funcion que ejecuta la cookie
+				function checkCookie() {
+                    //intentos es la variable del contador
+					var intentos=getCookie(nom);
+                    
+                    if (intentos != "") {
+                        alert("Hola " + nom + ". La ultima vez hiciste " + intentos + " intentos.");                       
+                    }
+                    else{
+                        alert("Hola " + nom + ". Es la primera vez que juegas. Suerte!");
+                           if (nom != "" && nom != null) {
+                               intentos = 0;
+                               setCookie(nom, intentos , 30);
+                           }
+                    }
+				}
+
+
+          </script>
+   
+
+
+
+
+
+</body>
+</html>

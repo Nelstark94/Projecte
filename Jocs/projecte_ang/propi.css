@@ -1,0 +1,60 @@
+body{
+  background-color: #EEE !important;
+}
+
+#contenidor{
+  width: 800px;
+  margin: 0 auto;
+  margin-top: 30px;
+  border: 1px solid black;
+  padding: 25px 10px 25px 10px;
+  text-align: center;
+  background-color: white;
+  box-shadow: 4px 10px 11px grey;
+  border-radius: 3px;
+}
+
+#boto-comencar{
+  padding: 10px;
+}
+
+#boto-acceptar{
+  padding: 10px 30px 10px 30px;
+}
+
+#textbox{
+  width: 200px;
+  margin: 0 auto;
+}
+
+#labelAnunci{
+  margin-bottom: 20px !important;
+}
+
+#labelAnunci2{
+  margin-bottom: 20px !important;
+}
+
+#paraulaAng{
+  font-size: 40px;
+}
+
+#resultat{
+  border: 1px solid black;
+  width: 500px;
+  margin: 0 auto;
+  display: none;
+}
+
+#resposta{
+  display: none;
+  padding: 10px 30px 10px 30px;
+}
+
+#parauleserror{
+  color: red;
+}
+
+#paraulesok{
+  color: blue;
+}
