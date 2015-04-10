@@ -666,6 +666,25 @@ a.more_news{
 
 .section-categories{
 	width: 933px !important;
+	height: 233px !important;
+}
+
+.text-section-categories{
+	width: 656px !important;
+	height: 233px !important;
+}
+
+.image-section-categories{
+	height: 197px !important;
+}
+
+.titol-section-categories{
+	width: 354px !important;
+}
+
+.text-gran-section-categories{
+	width: 667px !important;
+	text-align: justify;
 }
 
 ul#general_news{
