@@ -662,7 +662,11 @@ a.more_news{
 	right:10px;
 }
 
-/* General news */
+/* Section categories */
+
+.section-categories{
+	width: 933px !important;
+}
 
 ul#general_news{
 	list-style:none;

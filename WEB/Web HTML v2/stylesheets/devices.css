@@ -32,6 +32,10 @@ a#pull {
 
 @media only screen and (min-width: 768px) and (max-width: 959px) {
 
+.section-categories{
+	width: 740px !important;
+}
+
 #menu_wrapper{
 	height:auto;
 	float: none;
@@ -406,6 +410,10 @@ ul#hot_news_box li .image img{
 }
 
 /* left wrapper */
+
+.section-categories{
+	width: 272px !important;
+}
 
 #left_wrapper h2 {
 	width:245px;
