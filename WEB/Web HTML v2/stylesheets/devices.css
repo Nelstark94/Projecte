@@ -259,7 +259,6 @@ ul#gallery_wrapper{
 /* -----------------------------------------
   ~Mobile version
 ----------------------------------------- */
-
 @media only screen and (max-width: 767px) {
 
 /*generic layout */
@@ -403,7 +402,7 @@ ul#hot_news_box li .image img{
 }
 #left_wrapper, #right_wrapper{
 	float:left;
-	width:296px;
+	width:296px !important;
 }
 
 /* left wrapper */
@@ -504,6 +503,8 @@ textarea, input{
 .post-review{
 	margin: 10px 13px 20px 0px !important;
 }
+
+
 
 /* Right wrapper */
 
