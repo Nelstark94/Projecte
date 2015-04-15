@@ -432,6 +432,7 @@ ul#general_news li .image{
 ul#general_news li .info{
 	width: 245px;
 	height: auto;	
+	display: none;
 }
 ul#general_news li .info h2{
 	width:190px;
