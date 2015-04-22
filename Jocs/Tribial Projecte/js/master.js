@@ -1,6 +1,9 @@
 var numRandom;
 var numRandomPregunta;
 var pregunta;
+var maxIntents = 10;
+var intents = 0;
+var punts = 0;
 
 var hPregunta1 = new Pregunta("Qui foren els fundadors de barcelona?", "Els Romans", "Els Vikings", "Els Musulmans");
 var hPregunta2 = new Pregunta("Quina va ser la ciutat romana més important de catalunya?", "Tarragona", "Barcelona", "Girona");
@@ -55,39 +58,48 @@ function iniciarTribial(){
 
     numRandom = generarNombreRandom(null);
 
-	switch (numRandom){
-		case 1:
-			//Historia
-			$('#panelHistoria').show();
-			numRandomPregunta = generarNombreRandom(preguntesHistoria.length);
-			console.log("numRpregunta"+numRandomPregunta);
-			pregunta = preguntesHistoria[numRandomPregunta];
-			omplirPregunta(pregunta, "h");
-			break;
-		case 2:
-			//Esports
-			$('#panelEsports').show();
-			numRandomPregunta = generarNombreRandom(preguntesEsports.length);
-			console.log("numRpregunta"+numRandomPregunta);
-			pregunta = preguntesEsports[numRandomPregunta];
-			omplirPregunta(pregunta, "e");
-			break;
-		case 3:
-			//Art
-			$('#panelArt').show();
-			numRandomPregunta = generarNombreRandom(preguntesArt.length);
-			console.log("numRpregunta"+numRandomPregunta);
-			pregunta = preguntesArt[numRandomPregunta];
-			omplirPregunta(pregunta, "a");
-			break;
-		case 4:
-			//Mates
-			$('#panelGeografia').show();
-			numRandomPregunta = generarNombreRandom(preguntesGeografia.length);
-			console.log("numRpregunta"+numRandomPregunta);
-			pregunta = preguntesGeografia[numRandomPregunta];
-			omplirPregunta(pregunta, "g");
-			break;
+	if (intents < maxIntents){
+		switch (numRandom){
+			case 1:
+				//Historia
+				$('#panelHistoria').show();
+				numRandomPregunta = generarNombreRandom(preguntesHistoria.length);
+				console.log("numRpregunta"+numRandomPregunta);
+				pregunta = preguntesHistoria[numRandomPregunta];
+				omplirPregunta(pregunta, "h");
+				break;
+			case 2:
+				//Esports
+				$('#panelEsports').show();
+				numRandomPregunta = generarNombreRandom(preguntesEsports.length);
+				console.log("numRpregunta"+numRandomPregunta);
+				pregunta = preguntesEsports[numRandomPregunta];
+				omplirPregunta(pregunta, "e");
+				break;
+			case 3:
+				//Art
+				$('#panelArt').show();
+				numRandomPregunta = generarNombreRandom(preguntesArt.length);
+				console.log("numRpregunta"+numRandomPregunta);
+				pregunta = preguntesArt[numRandomPregunta];
+				omplirPregunta(pregunta, "a");
+				break;
+			case 4:
+				//Mates
+				$('#panelGeografia').show();
+				numRandomPregunta = generarNombreRandom(preguntesGeografia.length);
+				console.log("numRpregunta"+numRandomPregunta);
+				pregunta = preguntesGeografia[numRandomPregunta];
+				omplirPregunta(pregunta, "g");
+				break;
+		}
+	}else{
+		amagarPanels();
+		if(punts < 5){
+			swal({title: "Has de millorar!", text: "Només has encertat "+punts+" preguntes de "+intents+" intents", type: "success" });
+		}else{
+			swal({title: "Molt bé!", text: "Has encertat "+punts+" preguntes de "+intents+" intents", type: "success" });
+		}
 	}
 }
 
@@ -126,27 +138,41 @@ function generarNombreRandom(numMaxim){
 }
 
 function validarResposta(resposta){
+	intents++;
+	console.log( intents);
 	if (resposta == pregunta.respostaCorrecte){
-		swal({   
-			title: "Resposta correcte!",   
-		    text: "Molt bé segueix aixi!", 
-		    type: "success" },
+		if(intents < maxIntents){
+			swal({   
+				title: "Resposta correcte!",   
+			    text: "Molt bé segueix aixi!", 
+			    type: "success" },
 
-		    function(){ 
-		        iniciarTribial();
-			}
-		);
+			    function(){ 
+			        iniciarTribial(); 
+				}
+			);
+		}else{
+			/*amagarPanels();*/
+			mostrarResultat();
+		}
+
+		punts++;
 	}else{
-		swal({   
-			title: "Resposta incorrecte!",   
-		    text: "Oooohhh, has fallat!", 
-		    type: "error",    
-		    confirmButtonColor: "#DD6B55" },
+		if(intents < maxIntents){
+			swal({   
+				title: "Resposta incorrecte!",   
+			    text: "Oooohhh, has fallat!", 
+			    type: "error",    
+			    confirmButtonColor: "#DD6B55" },
 
-		    function(){ 
-		        iniciarTribial();
-			}
-		);
+			    function(){ 
+			        iniciarTribial();
+				}
+			);
+		}else{
+			/*amagarPanels();*/
+			mostrarResultat();
+		}
 	}
 }
 
@@ -155,4 +181,22 @@ function amagarPanels(){
     $('#panelEsports').hide();
     $('#panelArt').hide();
     $('#panelGeografia').hide();
+}
+
+function mostrarResultat(){
+	if(punts < 5){
+		swal({   
+			title: "Has de millorar!",   
+		    text: "Només has encertat "+punts+" preguntes de "+intents+" intents", 
+		    imageUrl: "images/bad.jpg",
+			showConfirmButton: false}
+		);
+	}else{
+		swal({   
+			title: "Molt bé!",   
+		    text: "Has encertat "+punts+" preguntes de "+intents+" intents", 
+		    imageUrl: "images/good.png",
+		    showConfirmButton: false }
+		);
+	}
 }
