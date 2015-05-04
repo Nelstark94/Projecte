@@ -1,4 +1,5 @@
 var stringParaula;
+var paraulaTmp;
 var pista;
 var arraiParaulesCatala;
 var arraiValidacio = new Array ();
@@ -14,12 +15,14 @@ var p4 = new Paraula("PERRUQUER","Ofici");
 var p5 = new Paraula("PAPALLONA","Animal volador");
 var p6 = new Paraula("MALAGA","Ciutat espanyola");
 var p7 = new Paraula("HANDBOL","Esport");
+var p8 = new Paraula("PISSARRA","Eina educativa");
+var p9 = new Paraula("BICICLETA","Vehicle");
 
-arraiParaulesCatala = [p1,p2,p3,p4,p5,p6,p7];
+arraiParaulesCatala = [p1,p2,p3,p4,p5,p6,p7,p8,p9];
 
 $( document ).ready(function() {
 	var nRandom = generarNombreRandom(arraiParaulesCatala.length);
-	var paraulaTmp = arraiParaulesCatala[nRandom].stringParaula;
+	paraulaTmp = arraiParaulesCatala[nRandom].stringParaula;
 	console.log(paraulaTmp);
 	$("#pista").text(arraiParaulesCatala[nRandom].pista);
 	arraiAmostrar = paraulaTmp.split("");
@@ -82,10 +85,30 @@ function recorrerParaula(lletra){
 		if(!trobat && intents < 10){
 			intents++;
 			$("#imatge").attr("src", "imatges/"+intents+".png");
-		}else if (intents == 10 ){
-			alert("Has perdut");
+		}
+
+		if (intents == 10 ){
+			$("#paraula").text(paraulaTmp);
+			swal({   
+				title: "Has perdut!",   
+			    text: "La paraula era "+paraulaTmp, 
+			    type: "error",    
+			    confirmButtonColor: "#DD6B55" },
+
+			    function(){ 
+			        location.reload();
+				}
+			);
 		}else if (contLletresCorrectes == cadena.length){
-			alert("molt be has guanyat");
+			swal({   
+				title: "Has guanyat!",   
+			    text: "La paraula era "+paraulaTmp, 
+			    type: "success" },
+
+			    function(){ 
+			        location.reload();
+				}
+			);
 		}
 	}
 }
