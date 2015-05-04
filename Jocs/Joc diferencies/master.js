@@ -42,7 +42,15 @@ $(document).ready(function(){
 			}else{
 				punts++;
 				if(punts == imatges.length/2){
-					alert("Ho has aconseguit!");
+					swal({   
+						title: "Ho has aconseguit!",   
+					    text: "Torna-hi!", 
+					    type: "success" },
+
+					    function(){ 
+					        location.reload();
+						}
+					);
 				}
 			}
 		click=1;
